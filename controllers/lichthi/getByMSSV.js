@@ -1,4 +1,3 @@
-const LichThiRepository = require("../../repositories/lichThi-repository");
 const LichthiRepository = require("../../repositories/lichThi-repository");
 
 module.exports = async (req, res) => {
