@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       ngayThi: DataTypes.STRING,
       phongThi: DataTypes.STRING,
       lopHocPhan: DataTypes.STRING,
+      giothi:  DataTypes.STRING,
     },
     {
       charset: "utf8mb4",

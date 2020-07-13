@@ -23,6 +23,7 @@ async function importExcelData2MySQL(filePath) {
       ngayThi: item["NGÀY THI"],
       phongThi: item["PHÒNG THI"],
       lopHocPhan: item["LỚP HỌC PHẦN"],
+      giothi: item["GIỜ THI"]
     };
   });
   let promises = [];
