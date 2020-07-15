@@ -20,6 +20,8 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "Mail",
     }
   );
-
+  mail.associate = function(models) {
+    mail.hasMany(models.lichthi);
+  }
   return mail;
 };

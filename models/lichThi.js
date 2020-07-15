@@ -24,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "LichThi",
     }
   );
-
+  lichthi.associate = function(models) {
+    lichthi.belongsTo(models.mail, {
+      foreignKeyConstraint: true,
+      onDelete: 'cascade'
+    });
+  }
   return lichthi;
 };
