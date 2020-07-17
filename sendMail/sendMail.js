@@ -1,17 +1,25 @@
 var nodemailer = require('nodemailer');
+const moment = require('moment')
 
 
 module.exports = function sendMail(data) {
 
     const tdHtml = [];
-    let emails = []
+    let emails = [];
+    let today = moment().format('YYYY-MM-DD')
+    let dayThi;
+    let daySendMail;
     data.forEach(item => {
-        let subHtml = `<tr><td>${item.lopHocPhan}</td><td>${item.ngayThi}</td><td>${item.giothi}</td><td>${item.phongThi}</td></tr>`
-        tdHtml.push(subHtml);
-        emails.push(item.email)
+        dayThi = moment(item.ngayThi).format('YYYY-MM-DD');
+        daySendMail = moment(item.ngayThi).add(-3,'days').format('YYYY-MM-DD');
+        if(daySendMail === today) {
+          let subHtml = `<tr><td>${item.lopHocPhan}</td><td>${item.ngayThi}</td><td>${item.giothi}</td><td>${item.phongThi}</td></tr>`
+          tdHtml.push(subHtml);
+          emails.push(item.email)
+        }
     })
-    console.log(tdHtml);
-    console.log(emails);
+console.log(tdHtml);
+console.log(emails);
 
     var transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -37,6 +45,7 @@ var mailOptions = {
  
  
 };
+// return true
 
 return transporter.sendMail(mailOptions, function(error, info){
   if (error) {

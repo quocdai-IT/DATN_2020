@@ -4,8 +4,11 @@ const XLSX = require("xlsx");
 const LichThiRepository = require("../../repositories/lichThi-repository");
 const lichThiRepository = new LichThiRepository();
 global.__basedir = __dirname;
+function excelDateToISODateString(excelDateNumber) {
+  return new Date(Math.round((excelDateNumber - 25569) * 86400 * 1000)).toISOString().substring(0, 10);
+}
 async function importExcelData2MySQL(filePath) {
-  var workbook = XLSX.readFile(filePath, { cellDates: true });
+  var workbook = XLSX.readFile(filePath, { cellDates: false });
   var sheet_name_list = workbook.SheetNames;
   var workSheet = workbook.Sheets[sheet_name_list[0]];
 
@@ -20,7 +23,7 @@ async function importExcelData2MySQL(filePath) {
       name: item["HỌ VÀ TÊN"],
       mssv: item["MÃ SINH VIÊN"],
       lop: item["LỚP"],
-      ngayThi: item["NGÀY THI"],
+      ngayThi: excelDateToISODateString(item["NGÀY THI"]),
       phongThi: item["PHÒNG THI"],
       lopHocPhan: item["LỚP HỌC PHẦN"],
       giothi: item["GIỜ THI"]
