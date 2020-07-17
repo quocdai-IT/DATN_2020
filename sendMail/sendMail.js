@@ -4,13 +4,15 @@ var nodemailer = require('nodemailer');
 module.exports = function sendMail(data) {
 
     const tdHtml = [];
-    data.forEach(items => {
-      items.forEach(item => {
+    let emails = []
+    data.forEach(item => {
         let subHtml = `<tr><td>${item.lopHocPhan}</td><td>${item.ngayThi}</td><td>${item.giothi}</td><td>${item.phongThi}</td></tr>`
         tdHtml.push(subHtml);
-      })
+        emails.push(item.email)
     })
     console.log(tdHtml);
+    console.log(emails);
+
     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -21,7 +23,7 @@ module.exports = function sendMail(data) {
 
 var mailOptions = {
   from: 'nqdai2904@gmail.com',
-  to: 'nqdai1997@gmail.com',
+  to: emails,
   subject: 'UTC2 Remind',
   html: `<table style="width:100%"  class="w3-table"">  
     <tr>

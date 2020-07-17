@@ -7,12 +7,10 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV1,
-      },
-      name: DataTypes.STRING,
-      mssv:{ 
-        type: DataTypes.STRING,  
         primaryKey: true,
       },
+      name: DataTypes.STRING,
+      mssv: DataTypes.STRING,
       email: DataTypes.STRING
     },
     {
@@ -22,8 +20,5 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "Mail",
     }
   );
-  mail.associate = function(models) {
-    mail.hasMany(models.lichthi);
-  }
   return mail;
 };

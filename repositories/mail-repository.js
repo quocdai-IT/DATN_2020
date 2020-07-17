@@ -5,14 +5,6 @@ class mailRepository extends BaseRepositorty {
   constructor() {
     super(dbContext.mail);
   }
-
-  async getLichThiByMail() {
-    return this._entity.findAll({
-      include: {
-        model: lichThi,
-      }
-    })
-  }
 }
 
 module.exports = mailRepository;

@@ -1,31 +1,33 @@
 const MailRepository = require('../repositories/mail-repository');
 const LichThiRepository = require('../repositories/lichThi-repository');
 const sendMail = require('../sendMail/sendMail');
+const lichThi = require('../models/lichThi');
+const { groupBy } = require('lodash');
 
 async function getMail() {
   try {
     const mailRepository = new MailRepository();
-    const mail =await mailRepository.findAll();
+    const mail =await mailRepository.findBy({});
     return mail;
   } catch(error){
     console.log(error)
   }
 }
 
-// async function getLichThi(mssv) {
-//   try {
-//     const lichThiRepository = new LichThiRepository();
-//     const lichThi = await lichThiRepository.findBy({mssv})
-//     return lichThi; 
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
-
-async function getLichThiByEmail() {
+async function getAllLichThi () {
   try {
     const lichThiRepository = new LichThiRepository();
-    const emails = await getMail();
+    const results = await lichThiRepository.findBy({});
+    return results;
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function getLichThiByEmail(emails) {
+  try {
+    const lichThiRepository = new LichThiRepository();
     let promises = [];
     emails.forEach(email => {
       promises.push(lichThiRepository.findBy({mssv: email.mssv}))
@@ -38,4 +40,29 @@ async function getLichThiByEmail() {
 }
 
 // async function mapping
-module.exports = getLichThiByEmail;
+async function linkEmail() {
+  const _ = require('lodash');
+  const emails = await getMail();
+  const licthis = await getAllLichThi();
+
+  let data = [];
+  _.forEach(emails, email => {
+    _.forEach(licthis, licthi => {
+      if(email.mssv === licthi.mssv) {
+        data.push({
+          email: email.email,
+          name: licthi.name,
+          lopHocPhan: licthi.lopHocPhan,
+          ngayThi: licthi.ngayThi,
+          giothi: licthi.giothi,
+          phongThi: licthi.phongThi,
+          mssv: email.mssv
+        })
+      }
+    })
+  })
+
+ return data
+  
+}
+module.exports = linkEmail;
