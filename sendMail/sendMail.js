@@ -1,9 +1,9 @@
 var nodemailer = require('nodemailer');
 const moment = require('moment')
+const getLichThiByEmail = require('../common/getMssvByEmail')
 
-
-module.exports = function sendMail(data) {
-
+module.exports =async function sendMail() {
+    const data = await getLichThiByEmail(); 
     const tdHtml = [];
     let emails = [];
     let today = moment().format('YYYY-MM-DD')
@@ -18,9 +18,10 @@ module.exports = function sendMail(data) {
           emails.push(item.email)
         }
     })
-console.log(tdHtml);
-console.log(emails);
-
+    
+    if(emails.length === 0) {
+      return false
+    }
     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -29,23 +30,22 @@ console.log(emails);
       }
     });
 
-var mailOptions = {
-  from: 'nqdai2904@gmail.com',
-  to: emails,
-  subject: 'UTC2 Remind',
-  html: `<table style="width:100%"  class="w3-table"">  
-    <tr>
-        <th>Lớp Học Phần</th>
-        <th>Ngày Thi</th>
-        <th>Giờ Thi</th>
-        <th>Phòng Thi</th>
-    </tr>
-    ${tdHtml.join('')}
- </table>`
- 
- 
-};
-// return true
+    var mailOptions = {
+      from: 'nqdai2904@gmail.com',
+      to: emails,
+      subject: 'UTC2 Remind',
+      html: `<table style="width:100%"  class="w3-table"">  
+        <tr>
+            <th>Lớp Học Phần</th>
+            <th>Ngày Thi</th>
+            <th>Giờ Thi</th>
+            <th>Phòng Thi</th>
+        </tr>
+        ${tdHtml.join('')}
+    </table>`
+    
+    
+    };
 
 return transporter.sendMail(mailOptions, function(error, info){
   if (error) {

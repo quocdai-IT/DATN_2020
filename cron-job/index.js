@@ -1,5 +1,6 @@
 const schedule = require("node-schedule");
 const SyncDataJiraHandler = require("./sync-data-jira");
+const SendMailHnadler = require('./send-mail');
 // const startConfigTraceService = require('./config-trace');
 
 function stopAllJobs() {
@@ -9,8 +10,8 @@ function stopAllJobs() {
 }
 
 async function startJobs() {
-  await SyncDataJiraHandler.start();
-  // await startConfigTraceService();
+  // await SyncDataJiraHandler.start();
+  await SendMailHnadler.start();
 }
 
 async function startCronJob() {

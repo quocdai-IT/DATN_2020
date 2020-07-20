@@ -28,7 +28,7 @@ var server = http.createServer(app);
  */
 models.sequelize.sync({ alter: true }).then(function () {
   server.listen(port, function () {
-    // startBackgroundService();
+    startBackgroundService();
 
     console.log("App listening at localhost:", port);
   });
