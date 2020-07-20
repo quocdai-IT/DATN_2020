@@ -33,7 +33,7 @@ module.exports =async function sendMail() {
     var mailOptions = {
       from: 'nqdai2904@gmail.com',
       to: emails,
-      subject: 'UTC2 Remind',
+      subject: '[UTC2] Reminder Exam Schedule',
       html: `<table style="width:100%"  class="w3-table"">  
         <tr>
             <th>Lớp Học Phần</th>
