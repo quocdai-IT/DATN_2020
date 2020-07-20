@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
         const data = {name,mssv,email}
         const checkExist =await mailRepository.findOne({mssv});
         if(checkExist) {
-            return res.success('Email registered');
+            return res.success('MSSV này đã đăng kí!');
         }else {
              const newData = await mailRepository.add(data);
              return res.success(newData)
