@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
     const lichThiRepository = new LichthiRepository();
     const mssv = req.params.mssv;
     const lichThiByMSSV = await lichThiRepository.findBy({ mssv: mssv });
-    if (lichThiByMSSV) {
+    if (lichThiByMSSV.length > 0) {
       return res.success(lichThiByMSSV);
     }
     return res.notFound();
