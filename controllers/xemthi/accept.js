@@ -6,16 +6,16 @@ module.exports = async (req, res) => {
     const xemThiRepository = new XemthiRepository();
     const xemThiDrafRepository = new XemthiDrafRepository();
 
-    const lichXemThi = await xemThiRepository.findBy({});
+    const lichXemThiDr = await xemThiDrafRepository.findBy({});
     let promises = [];
-    if (lichXemThi.length > 0) {
-      xemThiDrafRepository.truncate();
-      lichXemThi.forEach((item) => {
-        promises.push(xemThiDrafRepository.add(item));
+    if (lichXemThiDr.length > 0) {
+        xemThiRepository.truncate();
+        lichXemThiDr.forEach((item) => {
+        promises.push(xemThiRepository.add(item));
       });
       await Promise.all(promises);
     }
-    return res.success(lichXemThi);
+    return res.success(lichXemThiDr);
   } catch (error) {
     console.log(error);
     return res.serverError(error);

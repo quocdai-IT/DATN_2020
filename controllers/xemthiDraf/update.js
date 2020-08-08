@@ -4,10 +4,12 @@ module.exports = async (req, res) => {
   try {
     const xemThiDrafRepository = new XemthiDrafRepository();
     const data = req.body;
-    await xemThiDrafRepository.updateByOne(data, { thoigian: data.thoigian });
+    console.log(data);
+    await xemThiDrafRepository.updateByOne(data, { id: data.id });
 
     return res.success(data);
   } catch (error) {
+    console.log(error);
     return res.serverError(error);
   }
 };
