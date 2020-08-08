@@ -62,6 +62,13 @@ function invalidPermission(message = "The caller does not have permission") {
   });
 }
 
+function forbidden(err, msg = "forbidden") {
+  return this.status(403).json({
+    success: false,
+    message: msg,
+    data: err,
+  });
+}
 module.exports = function (req, res, next) {
   // Invalidate
   res.invalidInput = invalidInput;
@@ -80,6 +87,7 @@ module.exports = function (req, res, next) {
 
   // Invalid permission
   res.invalidPermission = invalidPermission;
+  res.forbidden = forbidden;
 
   next();
 };
@@ -90,3 +98,4 @@ module.exports.pagination = pagination;
 module.exports.serverError = serverError;
 module.exports.invalidInput = invalidInput;
 module.exports.invalidPermission = invalidPermission;
+module.exports.forbidden = forbidden;
