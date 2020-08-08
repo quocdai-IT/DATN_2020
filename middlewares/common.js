@@ -38,7 +38,7 @@ function pagination(
 }
 
 function invalidInput(error = "Invalid input!", data) {
-  return this.status(422).json({
+  return this.status(200).json({
     success: false,
     message: "Request failed",
     error,
