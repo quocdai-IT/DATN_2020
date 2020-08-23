@@ -12,6 +12,7 @@ module.exports = async (req, res, next) => {
       emailAddress: data.emailAddress,
     });
 
+    // console.log(user);
     if (!user) {
       return res.notFound("User not found");
     }
@@ -21,7 +22,7 @@ module.exports = async (req, res, next) => {
     const token = jwt.sign(
       {
         id: user.dataValues.id,
-        name: user.dataValues.firstName,
+        name: user.dataValues.name,
         emailAddress: user.dataValues.emailAddress,
         roles: user.dataValues.role,
       },
